@@ -14,7 +14,7 @@ ballimg = pygame.image.load('ball.jpg')
 brickimg = pygame.image.load('blue-brick.png')
 jugadorimg = pygame.image.load('table.png')
 #------------------------------------------------------
-w, h = 10, 2;
+w, h = 10, 2
 bricks = [[0 for x in range(w)] for y in range(h)]
 #------------------------------------------------------
 fondo = pygame.image.load('background.png')
