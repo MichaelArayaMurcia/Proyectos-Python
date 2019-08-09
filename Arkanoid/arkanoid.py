@@ -2,7 +2,7 @@ import pygame
 import random
 import Objetos
 #---------------- Ventana del juego -----------------
-pygame.init()
+init()
 pygame.display.set_caption('Arkanoid')
 #---------------- Estado del juego ------------------
 gameover = False
@@ -13,7 +13,7 @@ Objetos.crear()
 while gameover != True:
 	for event in pygame.event.get():
 	#------------- Cerrar el juego --------------------
-		if event.type == pygame.QUIT:
+		if event.type == QUIT:
 			gameover = True
 	#--------------------------------------------------
 	Objetos.update()
