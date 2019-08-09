@@ -2,6 +2,7 @@ import pygame
 
 pygame.display.set_caption('Space Invaders')
 
+
 class Juego:
     def __init__(self):
         self.largo = 300
@@ -29,14 +30,26 @@ class Jugador:
         juego.screen.blit(self.img,(self.x,self.y))
 juego = Juego()
 jugador = Jugador()
+
 def update():
     juego.show()
     jugador.show()
     pygame.display.update()
+def moverse():
+	keys = pygame.key.get_pressed()
+	if keys[pygame.K_RIGHT]:
+		jugador.x += juego.speed
+		if jugador.x == juego.largo - jugador.largo:
+			jugador.x -= juego.speed
+	elif keys[pygame.K_LEFT]:
+		jugador.x -= juego.speed
+		if jugador.x == 0:
+			jugador.x += juego.speed
 
 while juego.gameover != True:
     for event in pygame.event.get():
-	#------------- Cerrar el juego --------------------
         if event.type == pygame.QUIT:
             juego.gameover = True
+	#------------- Cerrar el juego --------------------
+    moverse()
     update()
