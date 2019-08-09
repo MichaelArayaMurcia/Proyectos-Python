@@ -16,6 +16,8 @@ class Juego:
         self.balas = 2
         self.enemigos = []
         self.img = pygame.image.load('purple.png') 
+        self.columna = 2
+        self.fila = 10
     def show(self):
         self.img = pygame.transform.scale(self.img,(self.largo,self.ancho))
         self.screen.blit(self.img,(0,0))
@@ -32,9 +34,9 @@ class Jugador:
         self.img = pygame.transform.scale(self.img,(self.largo,self.ancho))
         juego.screen.blit(self.img,(self.x,self.y))
 class Enemigo:
-    def __init__(self):
-        self.x = 0
-        self.y = 0
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
         self.largo = 20
         self.ancho = 20
         self.img = pygame.image.load('enemyBlack1.png')
@@ -62,11 +64,9 @@ def disparar():
     if len(jugador.balas) < juego.balas:
         jugador.balas.append(Bala())
 def crearenemigos():
-    for j in range(0,2):
-        for i in range(0,10):
-            juego.enemigos.append(Enemigo()) 
-            juego.enemigos[i].x = i * 25
-            juego.enemigos[i].y = j * 25
+    for j in range(0,juego.columna):
+        for i in range(0,juego.fila):
+            juego.enemigos.append(Enemigo(i * 25,j * 25)) 
 def update():
     juego.show()
     jugador.show()
@@ -77,7 +77,6 @@ def update():
         bala.update()
     pygame.display.update()
 def moverse():
-    keys = pygame.key.get_pressed()
     if keys[pygame.K_RIGHT]:
         jugador.x += juego.speed
         if jugador.x == juego.largo - jugador.largo:
@@ -86,12 +85,9 @@ def moverse():
         jugador.x -= juego.speed
         if jugador.x == 0:
             jugador.x += juego.speed
-    elif keys[pygame.K_UP]:
-        disparar()
 def destruir():
-    i = 0
-    j = 0
     for bala in jugador.balas:
+        i = 0
         for enemigo in juego.enemigos:
             if bala.y < enemigo.y + enemigo.largo and bala.x < enemigo.x + enemigo.ancho and bala.x > enemigo.x:
                 bala.hit = True
@@ -100,15 +96,19 @@ def destruir():
         if bala.y + bala.largo < 0:
             bala.hit = True
     for bala in jugador.balas:
+        j = 0
         if bala.hit == True:
             jugador.balas.pop(j)
         j += 1
 crearenemigos()
 
 while juego.gameover != True:
+    keys = pygame.key.get_pressed()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             juego.gameover = True
+        elif keys[pygame.K_UP]:
+            disparar()
 	#------------- Cerrar el juego --------------------
     moverse()
     destruir()
