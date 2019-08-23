@@ -91,4 +91,4 @@ while gameover != True:
 		if keys[pygame.K_UP]:
 			bird.y -= 60
 		#--------------------------------------------------
-	update();
+	update()
